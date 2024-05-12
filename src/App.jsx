@@ -2,7 +2,8 @@ import './App.css'
 import FighterListItem from './components/ZombieFighters';
 import { useState } from 'react';
 
-
+const team = [];
+let money = 100;
 const zombieFighters= 
 [
   {
@@ -79,17 +80,33 @@ const zombieFighters=
 const App = () => {
   const [team, setTeam] = useState([]);
   const [money, setMoney] = useState(100);
+  const [totalAgility, setTotalAgility] = useState(0);
+  const [totalStrength, setTotalStrength] = useState(0);
 
   const handleMove = (char) => {
     setTeam([...team, char]); // Add selected fighter to team array
     setMoney(money - char.price); // Update money
+    setTotalAgility(totalAgility + char.agility); // Update total agility
+    setTotalStrength(totalStrength + char.strength); // Update total strength
   }
+  const handleRemove = (index) => {
+    const removedFighter = team[index];
+    const updatedTeam = team.filter((fighter, i) => i !== index);
+    setTeam(updatedTeam);
+    setMoney(money + removedFighter.price); // Update money
+    setTotalAgility(totalAgility - removedFighter.agility); // Update total agility
+    setTotalStrength(totalStrength - removedFighter.strength); // Update total strength
+  };
+
+
+
   // Calculate total strength of the team array
-  const totalStrength = team.reduce((total, fighter) => total + fighter.strength, 0);
+  // const totalStrength = team.reduce((total, fighter) => total + fighter.strength, 0);
   // Calculate total agility of the team array
-  const totalAgility = team.reduce((total, fighter) => total + fighter.agility, 0);
+  // const totalAgility = team.reduce((total, fighter) => total + fighter.agility, 0);
 // Above code is what I ending up doing with info found from w3schools, the reduce() method executes a reducer function for array element. The reduce() method returns a single value: the function's accumulated result.
-// for each team array item add to the total of each members desired skill 
+// for each team array item add to the total of each members desired skill
+//Unfortunately can't use the reduce() method due to having to remove team members, reduce() will only add the team member value but there is a simpler way to do that, and that requires hooks which are the useState() methods.
   return (
 <> 
     <h1>Zombie Fighters</h1>
@@ -103,6 +120,7 @@ const App = () => {
             key={index}
             char={char}
             handleMove={handleMove}
+            handleRemove={() => handleRemove(index)} // Pass handleRemove function as 3rd prop
              />
           ))}
     </ul>
