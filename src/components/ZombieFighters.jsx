@@ -1,5 +1,5 @@
-const FighterListItem = (props) => {
-    const {char} = props
+
+const FighterListItem = ({char, handleMove}) => {
         return (
             <li>
             <img src="{char.img}" />
@@ -7,6 +7,7 @@ const FighterListItem = (props) => {
             <p>Price: {char.price}</p>
             <p>Strength: {char.strength}</p>
             <p>Agility: {char.agility}</p>
+            <button onClick={() => handleMove(char)}>Add</button>
             </li>
         );
       };

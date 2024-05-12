@@ -1,7 +1,8 @@
 import './App.css'
 import FighterListItem from './components/ZombieFighters';
-const team = []
-const money = 100
+import { useState } from 'react';
+
+
 const zombieFighters= 
 [
   {
@@ -76,19 +77,47 @@ const zombieFighters=
   },
 ];
 const App = () => {
+  const [team, setTeam] = useState([]);
+  const [money, setMoney] = useState(100);
 
+  const handleMove = (char) => {
+    setTeam([...team, char]); // Add selected fighter to team array
+    setMoney(money - char.price); // Update money
+  }
+  // Calculate total strength of the team array
+  const totalStrength = team.reduce((total, fighter) => total + fighter.strength, 0);
+  // Calculate total agility of the team array
+  const totalAgility = team.reduce((total, fighter) => total + fighter.agility, 0);
+// Above code is what I ending up doing with info found from w3schools, the reduce() method executes a reducer function for array element. The reduce() method returns a single value: the function's accumulated result.
+// for each team array item add to the total of each members desired skill 
   return (
 <> 
     <h1>Zombie Fighters</h1>
     <h3>Current money: {money}</h3>
-    <h3>Fighters</h3>
+    <h3>Total Team Strength: {totalStrength}</h3> 
+    <h3>Total Team Agility: {totalAgility}</h3> 
+    <h3>Team </h3>
+    <ul>
+      {team.map((char, index) => (
+            <FighterListItem 
+            key={index}
+            char={char}
+            handleMove={handleMove}
+             />
+          ))}
+    </ul>
+    <h2>Fighters: </h2>
       <ul>
       {zombieFighters.map((char) => (
             <FighterListItem 
             key={char.name}
             char={char}
+            handleMove={handleMove}
              />
-          ))}
+             
+          ))
+          }
+
     </ul>
   </>
   );
