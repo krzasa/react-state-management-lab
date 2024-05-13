@@ -84,15 +84,15 @@ const App = () => {
   const [totalStrength, setTotalStrength] = useState(0);
 
   const handleMove = (char) => {
-    if (char.price > money) {
+    // if (char.price > money) {
     setTeam([...team, char]); // Add selected fighter to team array
     setMoney(money - char.price); // Update money
     setTotalAgility(totalAgility + char.agility); // Update total agility
     setTotalStrength(totalStrength + char.strength); // Update total strength
   
-  } else {
-    alert('Not enough money');
-  }
+  // } else {
+  //   alert('Not enough money');
+  // }
 }
   const handleRemove = (index) => {
     const removedFighter = team[index];
