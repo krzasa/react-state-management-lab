@@ -93,6 +93,7 @@ const App = () => {
   } else {
     alert('Not enough money');
   }
+}
   const handleRemove = (index) => {
     const removedFighter = team[index];
     const updatedTeam = team.filter((fighter, i) => i !== index);
